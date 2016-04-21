@@ -4,4 +4,4 @@
 
 
   tasks:
-   - debug: msg="System {{ inventory_hostname }} is running {{ ansible_distribution_version }} / {{ ansible_kernel }}"
+   - debug: msg="Host {{ inventory_hostname }} is running {{ ansible_distribution_version }} / {{ ansible_kernel }}"
