@@ -1,0 +1,7 @@
+---
+- hosts: all
+  sudo: False
+
+
+  tasks:
+   - debug: msg="System {{ inventory_hostname }} is running {{ ansible_distribution_version }} / {{ ansible_kernel }}"
