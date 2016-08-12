@@ -1,13 +1,17 @@
 ---
 - hosts: all
-  sudo: False
+  become: False
 
+# https://support.ansible.com/hc/en-us/articles/201957947-How-do-I-access-shell-environment-variables-
 
   vars:
     - customer: "{{ lookup('env', 'CUSTOMER') }}"
     - local_home: "{{ lookup('env','HOME') }}"
+    - local_string: "{{ lookup('env', 'STRING')}}"
 
 
   tasks:
    - debug: msg="envcustomer  {{ customer }}"
+
    - debug: msg="home {{ local_home }}"
+   - debug: msg="home {{ local_string }}"
