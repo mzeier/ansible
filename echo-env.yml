@@ -1,0 +1,12 @@
+---
+- hosts: all
+  sudo: False
+
+
+  vars:
+    - customer: "{{ lookup('env', 'CUSTOMER') }}"
+    - local_home: "{{ lookup('env','HOME') }}"
+
+
+  tasks:
+   - debug: msg="envcustomer  {{ customer }}"
