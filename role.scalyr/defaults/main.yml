@@ -1,0 +1,6 @@
+---
+
+scalyr_repo: "https://www.scalyr.com/scalyr-repo/stable/latest/scalyr-repo-bootstrap_1.2.1_all.deb"
+
+scalry_api_key: "YOUR API KEY"
+

@@ -1,0 +1,11 @@
+---
+
+- block:
+
+  - name: copy /etc/scalyr-agent-2/agent.json
+    template: src="agent.json.j2" dest="/etc/scalyr-agent-2/agent.json" mode=0644
+    notify: restart scalyr
+
+  tags:
+   - scalyr
+   - configure-scalyr

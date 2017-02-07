@@ -1,0 +1,2 @@
+- name: restart scalyr
+  service: name=scalyr-agent-2 state=restarted

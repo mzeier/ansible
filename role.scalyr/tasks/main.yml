@@ -1,0 +1,4 @@
+---
+
+- include: install-scalyr.yml
+- include: configure-scalyr.yml

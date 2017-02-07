@@ -1,0 +1,20 @@
+---
+
+- block:
+
+  - name: add scalyr apt repo
+    apt: deb="{{ scalyr_repo }}" update_cache=yes
+
+  - name: install scalyr agent
+    apt: name={{ item }} state=latest update_cache=yes
+    register: aptscalyr
+    with_items:
+     - scalyr-repo
+     - scalyr-agent-2
+
+#  - name: configure scalyr write API key
+#    command: 'scalyr-agent-2-config --set-key "0//VAWYKBVy1LmcEj9ZsojC3Np8idkPMx4j3gyX6f2WQ-"'
+#    when: aptscalyr.changed
+
+  tags:
+   - scalyr
