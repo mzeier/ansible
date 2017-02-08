@@ -3,14 +3,17 @@
 - block:
 
   - name: add scalyr apt repo
-    apt: deb="{{ scalyr_repo }}" update_cache=yes
+    apt_repository:
+      repo: "deb https://scalyr-repo.s3.amazonaws.com/stable/apt scalyr main"
+      filename: "scalyr.list"
+      state: present
+      update_cache: yes
+
+  - name: add scalyr apt gpg key
+    apt_key: url="https://www.scalyr.com/scalyr-repo/stable/GPG-scalyr-package-signing" state=present
 
   - name: install scalyr agent
-    apt: name={{ item }} state=latest update_cache=yes
-    register: aptscalyr
-    with_items:
-     - scalyr-repo
-     - scalyr-agent-2
+    apt: name="scalyr-agent-2" state=latest update_cache=yes
 
   tags:
    - scalyr

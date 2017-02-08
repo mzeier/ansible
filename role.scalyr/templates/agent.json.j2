@@ -4,7 +4,7 @@
 
 {
   // Enter a "Write Logs" api key for your account. These are available at https://www.scalyr.com/keys
-  api_key: "{{ scalry_api_key }}",
+  api_key: "{{ scalyr_api_key }}",
 
   // Fields describing this server. These fields are attached to each log message, and
   // can be used to filter data from a particular server or group of servers.
@@ -22,11 +22,13 @@
 
   }
 
-  // Log files to upload to Scalyr. You can use '*' wildcards here.
+  // Log files to upload to Scalyr. You can use * wildcards here.
   logs: [
 {% if ec2_tag_role == "ha" or ec2_tag_role == "app"  %}
-     { path: "/mnt/logs/nginx/access.log", attributes: {parser: "accessLog"} },
      { path: "/mnt/logs/nginx/error.log", attributes: {parser: "accessLog"} },
+{% if nginx_logs %}
+     { path: "/mnt/logs/nginx/access.log", attributes: {parser: "accessLog"} },
+{% endif %}
 {% endif %}
      { path: "/var/log/syslog", attributes: {parser: "system-messages"} },
      { path: "/var/log/dmesg", attributes: {parser: "system-messages"} },
