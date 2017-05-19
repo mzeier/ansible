@@ -1,0 +1,45 @@
+{% for server in snmp_devices %}
+#
+# config stanza for {{ server.hostname }}
+#
+[[inputs.snmp]]
+  agents = [ "{{ server.hostname }}" ]
+  version = 2
+  community = "{{ server.community }}"
+
+  [[inputs.snmp.field]]
+    name = "hostname"
+    oid = "RFC1213-MIB::sysName.0"
+    is_tag = true
+
+  # IF-MIB::ifTable contains counters on input and output traffic as well as errors and discards.
+  [[inputs.snmp.table]]
+    name = "interface"
+    inherit_tags = [ "hostname" ]
+    oid = "IF-MIB::ifTable"
+
+    # Interface tag - used to identify interface in metrics database
+    [[inputs.snmp.table.field]]
+      name = "ifDescr"
+      oid = "IF-MIB::ifDescr"
+      is_tag = true
+
+    # Interface tag - used to identify interface in metrics database
+    [[inputs.snmp.table.field]]
+      name = "ifAlias"
+      oid = "IF-MIB::ifAlias"
+      is_tag = true
+
+  # IF-MIB::ifXTable contains newer High Capacity (HC) counters that do not overflow as fast for a few of the ifTable counters
+  [[inputs.snmp.table]]
+    name = "interface"
+    inherit_tags = [ "hostname" ]
+    oid = "IF-MIB::ifXTable"
+
+    # Interface tag - used to identify interface in metrics database
+    [[inputs.snmp.table.field]]
+      name = "ifDescr"
+      oid = "IF-MIB::ifDescr"
+      is_tag = true
+
+{% endfor %}

@@ -1,0 +1,9 @@
+---
+
+- block:
+
+  - name: install snmp/telegraf dependencies
+    apt: name="snmp-mibs-downloader" state=latest
+
+  tags:
+   - telegraf-config

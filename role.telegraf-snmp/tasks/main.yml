@@ -1,0 +1,6 @@
+---
+
+- include: install-snmp-reqs.yml
+  when: config_snmp
+
+- include: configure.yml

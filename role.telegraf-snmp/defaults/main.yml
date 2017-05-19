@@ -1,0 +1,17 @@
+---
+
+config_snmp: true
+config_http: true
+telegraf_wfproxyhost: "localhost"
+telegraf_wfproxyport: "2878"
+
+snmp_devices:
+  - hostname: "sx01"
+    community: "public"
+  - hostname: "sx02"
+    community: "public"
+  - hostname: "fw01"
+    community: "public"
+
+http_hosts:
+  - url: "https://metrics.wavefront.com"

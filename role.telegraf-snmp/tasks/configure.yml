@@ -1,0 +1,48 @@
+---
+
+- block:
+
+  - name: copy telegraf.con
+    template:
+      src: telegraf.conf.j2
+      dest: "/etc/telegraf/telegraf.conf"
+      mode: 0644
+      owner: root
+      group: root
+      #backup: yes
+    notify: restart telegraf
+
+  - name: copy wavefront output config
+    template:
+      src: 10-wavefront.conf.j2
+      dest: "/etc/telegraf/telegraf.d/10-wavefront.conf"
+      mode: 0644
+      owner: root
+      group: root
+      backup: yes
+    notify: restart telegraf
+
+  - name: copy snmp input config
+    template:
+      src: 20-snmp.conf.j2
+      dest: "/etc/telegraf/telegraf.d/20-snmp.conf"
+      mode: 0644
+      owner: root
+      group: root
+      backup: yes
+    when: config_snmp
+    notify: restart telegraf
+
+  - name: copy http_response input config
+    template:
+      src: "30-http_response.conf.j2"
+      dest: "/etc/telegraf/telegraf.d/30-http_response.conf"
+      mode: 0644
+      owner: root
+      group: root
+    when: config_http
+    notify: restart telegraf
+
+
+  tags:
+   - telegraf-config

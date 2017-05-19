@@ -1,0 +1,7 @@
+{% for host in http_hosts %}
+[[inputs.http_response]]
+  address = "{{ host.url }}"
+  response_timeout = "5s"
+  method = "GET"
+
+{% endfor %}
