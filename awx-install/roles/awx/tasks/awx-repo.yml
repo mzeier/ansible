@@ -1,0 +1,12 @@
+---
+- block:
+
+  - name: clone https://github.com/ansible/awx.git
+    git:
+     repo: https://github.com/ansible/awx.git
+     dest: "/home/ubuntu/awx-repo"
+     force: yes
+    become_user: ubuntu
+
+  tags:
+   - awx

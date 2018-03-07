@@ -1,0 +1,30 @@
+---
+
+- hosts: tag_role_awx
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      tags:
+        - first-time
+
+- hosts: tag_role_awx
+  become: true
+  gather_facts: yes
+
+  vars:
+    - tower: false
+    - role: "{{ ec2_tag_role }}"
+    - awx_admin_pw: "{{ lookup('credstash', 'awx.admin.pw', region='us-west-2') }}"
+    - awx_db_password: "{{ lookup('credstash', 'awx.db.password', region='us-west-2') }}"
+    - awx_rabbitmq_pw: "{{ lookup('credstash', 'awx.rabbitmq.pw', region='us-west-2') }}"
+    - awx_secret: "{{ lookup('credstash', 'awx.secret', region='us-west-2') }}"
+    - dbname: "awx"
+    - dbuser: "awx"
+    - dbhost: "ecs-awx..us-west-2.rds.amazonaws.com"
+    - dbport: "5432"
+
+  roles:
+    - awx

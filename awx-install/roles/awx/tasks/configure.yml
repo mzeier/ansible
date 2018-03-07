@@ -1,0 +1,11 @@
+---
+- block:
+
+  - name: copy inventory file (templated variables)
+    template:
+      dest: "/home/ubuntu/awx-repo/installer/inventory"
+      src: "inventory.j2"
+      owner: ubuntu
+      backup: yes
+  tags:
+   - awx

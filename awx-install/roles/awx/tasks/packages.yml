@@ -1,0 +1,18 @@
+---
+- block:
+
+  - name: awx dependencies (packages)
+    apt: name="{{ item }}" state=latest
+    with_items:
+     - docker
+     - docker-compose
+     - python-pip
+
+  - name: awx dependencies (pip)
+    pip: name="{{ item }}"
+    with_items:
+     - pip
+     - ansible
+
+  tags:
+   - awx

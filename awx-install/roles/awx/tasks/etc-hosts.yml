@@ -1,0 +1,19 @@
+---
+
+#
+# Roles like telegraf depend on properly configured hostnames before service starts.
+# - this role constructs the wavefront hostname and sets accordingly.
+#
+
+- block:
+
+  - name: set /etc/hosts
+    template:
+      src: "hosts.j2"
+      dest: "/etc/hosts"
+      mode: 0644
+      owner: root
+      group: root
+
+  tags:
+   - awx

@@ -1,0 +1,6 @@
+---
+- include: hostname.yml
+- include: etc-hosts.yml
+- include: packages.yml
+- include: awx-repo.yml
+- include: configure.yml

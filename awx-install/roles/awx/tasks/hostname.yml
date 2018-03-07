@@ -1,0 +1,11 @@
+- block:
+
+  - name: generate hostname
+    set_fact:
+      gHostname: "{{ inventory_hostname | regex_replace('_', '-')}}"
+
+  - name: set hostname
+    hostname: name={{ gHostname }}
+
+  tags:
+   - awx
