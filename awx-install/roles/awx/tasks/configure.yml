@@ -7,5 +7,19 @@
       src: "inventory.j2"
       owner: ubuntu
       backup: yes
+
+  - name: put ubuntu into docker group
+    user: name="ubuntu" groups="docker" append="yes"
+
+  - name: copy nginx.conf
+    template:
+      dest: "/etc/nginx/nginx.conf"
+      src: "nginx.conf.j2"
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart nginx
+
   tags:
    - awx
+   - awx-configure

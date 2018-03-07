@@ -33,7 +33,7 @@ awx_secret_key={{ awx_secret }}
 
 # Common Docker parameters
 postgres_data_dir=/tmp/pgdocker
-host_port=80
+host_port={{ host_port }}
 
 # Required for Openshift when building the image on your own
 # Optional for Openshift if using Dockerhub or another prebuilt registry

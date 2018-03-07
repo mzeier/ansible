@@ -5,14 +5,19 @@
     apt: name="{{ item }}" state=latest
     with_items:
      - docker
+     - nginx
+     - nginx-common
+     - nginx-core
      - docker-compose
      - python-pip
+     - libssl-dev
 
   - name: awx dependencies (pip)
     pip: name="{{ item }}"
     with_items:
-     - pip
+     - cryptography==1.5
      - ansible
 
   tags:
    - awx
+   - awx-packages
