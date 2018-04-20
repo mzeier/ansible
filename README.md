@@ -15,7 +15,7 @@ _Note: you need to run Ansible locally on the destination host as root._
 Installs and configures Telegraf for use with Wavefront.
 
 ### `role.postboot-ec2facts`
-Most Playbooks assume EC2 facts through `ec2.py`. In some use cases, we run Playbooks locally on boot using `ansible-pull` and derive similar facts through `ec2_facts` and user-data.
+Most Playbooks assume EC2 facts through `ec2.py`. In some use cases, you may need to run Playbooks locally on boot using `ansible-pull` and derive similar facts through `ec2_facts` and user-data.
 
 Sample user-data:
 
