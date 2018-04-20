@@ -1,0 +1,45 @@
+---
+
+# Description:
+#  - plumb facts from metadata URL
+#  - some facts are parsed from user-data which is plumbed by terraform
+#  - normally these facts come in from ec2.py dynamic inventory but this particular
+#     role is meant to run on instance boot locally.
+#
+# Sample user-data:
+#     {"ansible": {"role": "db", "cluster": "elgon", "mirror": "primary"}}
+
+
+
+- block:
+
+  - name: grab ec2facts
+    ec2_facts:
+
+  - name: set ec2_tag_cluster fact
+    set_fact:
+      ec2_tag_cluster: "{{ (ansible_ec2_user_data|from_json)['ansible']['cluster']}}"
+
+  - name: set ec2_tag_mirror fact
+    set_fact:
+      ec2_tag_mirror: "{{ (ansible_ec2_user_data|from_json)['ansible']['mirror']}}"
+
+  - name: set ec2_tag_classifier fact
+    set_fact:
+      ec2_tag_classifier: "{{ (ansible_ec2_user_data|from_json)['ansible']['classifier']}}"
+    ignore_errors: true
+
+  - name: Retrieve all tags on an instance
+    ec2_tag:
+      region: '{{ ansible_ec2_placement_region }}'
+      resource: '{{ ansible_ec2_instance_id }}'
+      state: list
+    register: ec2_tags
+
+  - name: set ec2_tag_index
+    set_fact:
+      ec2_tag_index: "{{ ec2_tags.tags.index }}"
+    when: role == 'db'
+
+  tags:
+   - ec2facts

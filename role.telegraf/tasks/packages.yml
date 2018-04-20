@@ -1,0 +1,20 @@
+---
+
+- block:
+
+  - name: wavefront telegraf apt repository key.
+    apt_key: url="{{ wavefront_telegraf_pkg_url }}/gpgkey" state=present
+
+  - name: wavefront telegraf apt repository.
+    apt_repository: repo="deb {{ wavefront_telegraf_pkg_url }}/ubuntu/ {{ ansible_distribution_release }} main" state=present update_cache=yes
+
+# work-around for apt failures when something else is running on boot
+  - name: pause for dpkg to settle down
+    pause: minutes=1
+    when: tower|default(false)|bool
+
+  - name: install wavefront telegraf
+    apt: name="telegraf" state=latest
+
+  tags:
+   - telegraf

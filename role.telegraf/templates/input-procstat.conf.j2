@@ -1,0 +1,12 @@
+[[inputs.procstat]]
+  exe = "telegraf"
+  name_suffix = "_telegraf"
+
+{% if telegraf_procstat %}
+{% for process in telegraf_procstat %}
+[[inputs.procstat]]
+  pid_file = "{{ process.pidfile }}"
+  name_suffix = "_{{ process.process_name }}"
+
+{% endfor %}
+{% endif %}

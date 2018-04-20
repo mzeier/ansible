@@ -1,0 +1,24 @@
+---
+
+- block:
+
+  - name: plumb default telegraf.conf
+    template: src="telegraf.conf.j2" dest="{{ telegraf_main_config }}" mode=0644
+    notify: restart telegraf
+
+  - name: plumb default wavefront output plugin
+    template: src="10-wavefront.conf.j2" dest="{{ telegraf_additional_config_dir }}/10-wavefront.conf" mode=0644
+    notify: restart telegraf
+
+  - name: telegraf input - nginx
+    template: src="input-nginx.conf.j2" dest="{{ telegraf_additional_config_dir }}/input-nginx.conf" mode=0644
+    when: ec2_tag_role == "ha" or ec2_tag_role == "app"
+    notify: restart telegraf
+
+  - name: telegraf input.procstat
+    template: src="input-procstat.conf.j2" dest="{{ telegraf_additional_config_dir }}/input-procstat.conf" mode=0644
+    notify: restart telegraf
+
+  tags:
+   - telegraf
+   - configure-telegraf
